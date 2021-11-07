@@ -29,6 +29,9 @@ def make_ps3_video(src_video: Path, dst_video: Path, input_subtitles: typing.Lis
     except FileNotFoundError:
         raise Exception('unable to find the required external program %s. Make sure that it\'s installed and that it\'s in your path' % ffmpeg_exe)
 
+    if dst_video.suffix[1:] != 'avi':
+        raise Exception('Uexpected extension for the output video file (%s). Only the avi container supports subtitles on Playstation 3. Please fix your output video file name accordingly.' % dst_video.suffix[1:])
+
     ffmpeg_command = [ffmpeg_exe]
     ffmpeg_command += ['-i', src_video]
     for input_subtitle_file_path in input_subtitles:
